@@ -998,24 +998,3 @@ code, kbd {
     .hero__cta { width: 100%; }
     .hero__cta .btn { flex: 1; justify-content: center; }
 }
-
-/* Bannière « à la une » (projet mis en avant) */
-.featured-banner {
-    display: block;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform var(--transition), border-color var(--transition);
-}
-
-.featured-banner:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-strong);
-}
-
-.featured-banner img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
