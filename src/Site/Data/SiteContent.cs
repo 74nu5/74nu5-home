@@ -30,7 +30,7 @@ public static class SiteContent
     public const string AvatarUrl = "https://avatars.githubusercontent.com/u/325077?v=4";
     public const string GitHubUrl = "https://github.com/74nu5";
     public const string GitHubOrgUrl = "https://github.com/Tanuscorp";
-    public const string Email = "romain@avonde.email";
+    public const string Email = "info@tanus.eu";
     public const string SiteRepoUrl = "https://github.com/74nu5/74nu5";
 
     /// <summary>Rôles défilants dans le hero, par langue.</summary>

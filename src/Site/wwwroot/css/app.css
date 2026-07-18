@@ -204,18 +204,11 @@ code, kbd {
 
 .brand:hover { color: var(--text); }
 
-.brand__dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--term-green);
-    box-shadow: 0 0 10px var(--term-green);
-    animation: pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+.brand__mark {
+    display: block;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
 }
 
 .brand__accent { color: var(--accent); }

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="74nu5.dev">
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#12161f" stroke="#2f3a55" stroke-width="2"/>
+  <polyline points="21,21 33,32 21,43" fill="none" stroke="#8b9dff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="36" y="38" width="15" height="5" rx="2.5" fill="#5eead4"/>
+</svg>
