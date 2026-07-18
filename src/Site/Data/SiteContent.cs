@@ -40,6 +40,12 @@ public static class SiteContent
 
     public static readonly LiveApp[] Apps =
     [
+        new("Bouchon Universel", "bouchon-universel.74nu5.dev", "https://bouchon-universel.74nu5.dev",
+            "https://github.com/74nu5/bouchon-universel",
+            "Serveur de bouchons HTTP (mocks) : enregistre puis rejoue les réponses de services réels. Ingénierie du chaos, templating, import/export, administration web et API. Lien vers la documentation en ligne.",
+            "Universal HTTP mock server: records then replays real service responses. Chaos engineering, templating, import/export, web admin and API. Link to the online documentation.",
+            "ASP.NET Core · .NET 10 · Docker", "plug"),
+
         new("LINQ Marbles", "linq-marbles.74nu5.dev", "https://linq-marbles.74nu5.dev",
             "https://github.com/74nu5/LINQMarbles",
             "Diagrammes « marble » interactifs pour apprendre et expérimenter les opérateurs LINQ.",
