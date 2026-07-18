@@ -1,0 +1,70 @@
+@inherits LayoutComponentBase
+@implements IDisposable
+@inject LocalizationService Loc
+@inject ThemeService Theme
+
+<header class="navbar">
+    <div class="navbar__inner">
+        <a class="brand" href="#top">
+            <span class="brand__dot"></span>
+            <span><span class="brand__accent">74</span>nu5<span class="brand__accent">.dev</span></span>
+        </a>
+
+        <nav class="nav-links @(_menuOpen ? "open" : "")" @onclick="CloseMenu">
+            <a href="#apps"><span class="hash">#</span>@Loc["nav.apps"]</a>
+            <a href="#projects"><span class="hash">#</span>@Loc["nav.projects"]</a>
+            <a href="#stack"><span class="hash">#</span>@Loc["nav.stack"]</a>
+            <a href="#contact"><span class="hash">#</span>@Loc["nav.contact"]</a>
+        </nav>
+
+        <div class="nav-tools">
+            <LanguageToggle />
+            <ThemeToggle />
+            <button class="icon-btn nav-toggle" @onclick="ToggleMenu" aria-label="@Loc["a11y.menu"]">
+                <Icon Name="menu" />
+            </button>
+        </div>
+    </div>
+</header>
+
+<main id="top">
+    @Body
+</main>
+
+<footer class="footer">
+    <div class="container footer__inner">
+        <span>© @DateTime.Now.Year @SiteContent.Name — @Loc["footer.built"]</span>
+        <a href="@SiteContent.SiteRepoUrl" target="_blank" rel="noopener">@Loc["footer.source"] ↗</a>
+    </div>
+</footer>
+
+@code {
+    private bool _menuOpen;
+
+    private void ToggleMenu() => _menuOpen = !_menuOpen;
+
+    private void CloseMenu() => _menuOpen = false;
+
+    protected override void OnInitialized()
+    {
+        Loc.OnChanged += Refresh;
+        Theme.OnChanged += Refresh;
+    }
+
+    private void Refresh() => _ = InvokeAsync(StateHasChanged);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Theme.InitializeAsync();
+            await Loc.InitializeAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        Loc.OnChanged -= Refresh;
+        Theme.OnChanged -= Refresh;
+    }
+}

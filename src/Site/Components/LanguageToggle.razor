@@ -1,0 +1,9 @@
+@inherits LocalizedComponentBase
+
+<button class="icon-btn" @onclick="Toggle" title="@Loc["a11y.lang"]" aria-label="@Loc["a11y.lang"]">
+    @(Loc.IsFr ? "FR" : "EN")
+</button>
+
+@code {
+    private Task Toggle() => Loc.ToggleAsync();
+}

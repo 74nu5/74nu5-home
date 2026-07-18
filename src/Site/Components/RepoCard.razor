@@ -1,0 +1,80 @@
+@inherits LocalizedComponentBase
+
+<article class="card">
+    <div class="card__top">
+        <span class="pill">@@@Repo.OwnerLabel</span>
+        @if (Repo.Archived)
+        {
+            <span class="pill">archived</span>
+        }
+    </div>
+
+    <h3 class="card__title">
+        <a href="@Repo.HtmlUrl" target="_blank" rel="noopener">@Repo.Name</a>
+    </h3>
+
+    <p class="card__desc">@(string.IsNullOrWhiteSpace(Repo.Description) ? "—" : Repo.Description)</p>
+
+    @if (Repo.Topics is { Length: > 0 })
+    {
+        <div class="topics">
+            @foreach (var topic in Repo.Topics.Take(4))
+            {
+                <span class="pill">@topic</span>
+            }
+        </div>
+    }
+
+    <div class="card__footer">
+        @if (!string.IsNullOrEmpty(Repo.Language))
+        {
+            <span class="meta">
+                <span class="lang-dot" style="background:@LangColor(Repo.Language)"></span>@Repo.Language
+            </span>
+        }
+        @if (Repo.StargazersCount > 0)
+        {
+            <span class="meta"><Icon Name="star" /> @Repo.StargazersCount</span>
+        }
+        @if (Repo.ForksCount > 0)
+        {
+            <span class="meta"><Icon Name="fork" /> @Repo.ForksCount</span>
+        }
+
+        <div class="card__links">
+            @if (!string.IsNullOrWhiteSpace(Repo.Homepage) && Repo.Homepage.StartsWith("http"))
+            {
+                <a href="@Repo.Homepage" target="_blank" rel="noopener" title="Site"><Icon Name="external" /></a>
+            }
+            <a href="@Repo.HtmlUrl" target="_blank" rel="noopener" title="GitHub"><Icon Name="github" /></a>
+        </div>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public GitHubRepo Repo { get; set; } = default!;
+
+    // Couleurs officielles GitHub Linguist (sous-ensemble courant).
+    private static readonly Dictionary<string, string> Colors = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["C#"] = "#178600",
+        ["TypeScript"] = "#3178c6",
+        ["JavaScript"] = "#f1e05a",
+        ["HTML"] = "#e34c26",
+        ["CSS"] = "#563d7c",
+        ["SCSS"] = "#c6538c",
+        ["C"] = "#555555",
+        ["C++"] = "#f34b7d",
+        ["Python"] = "#3572A5",
+        ["Shell"] = "#89e051",
+        ["PowerShell"] = "#012456",
+        ["Java"] = "#b07219",
+        ["Go"] = "#00ADD8",
+        ["Rust"] = "#dea584",
+        ["Vue"] = "#41b883",
+        ["Dockerfile"] = "#384d54",
+    };
+
+    private static string LangColor(string lang) =>
+        Colors.TryGetValue(lang, out var c) ? c : "#8b9dff";
+}

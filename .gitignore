@@ -1,0 +1,23 @@
+# .NET
+bin/
+obj/
+publish/
+*.user
+*.suo
+.vs/
+
+# Rider / VS
+.idea/
+
+# Build output
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env
+*.env
+appsettings.*.local.json

@@ -1,0 +1,9 @@
+@inherits LocalizedComponentBase
+
+<button class="icon-btn" @onclick="Toggle" title="@Loc["a11y.theme"]" aria-label="@Loc["a11y.theme"]">
+    <Icon Name="@(Theme.IsDark ? "sun" : "moon")" />
+</button>
+
+@code {
+    private Task Toggle() => Theme.ToggleAsync();
+}

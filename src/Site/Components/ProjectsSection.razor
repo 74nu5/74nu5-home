@@ -1,0 +1,134 @@
+@inherits LocalizedComponentBase
+@inject GitHubService GitHub
+
+<section class="section" id="projects">
+    <div class="container">
+        <div class="section__head">
+            <span class="section__index">@Loc["projects.index"] //</span>
+            <h2 class="section__title">@Loc["projects.title"]</h2>
+        </div>
+        <p class="section__sub" style="margin-bottom:26px">@Loc["projects.sub"]</p>
+
+        @if (_loading)
+        {
+            <div class="grid grid--repos">
+                @for (var i = 0; i < 6; i++)
+                {
+                    <div class="skeleton"></div>
+                }
+            </div>
+        }
+        else if (_data is { RateLimited: true })
+        {
+            <div class="state">⚠ @Loc["projects.ratelimited"]</div>
+        }
+        else if (_data is { Failed: true } or null)
+        {
+            <div class="state">
+                @Loc["projects.error"]
+                <div style="margin-top:14px">
+                    <a class="btn btn--ghost" href="@SiteContent.GitHubUrl" target="_blank" rel="noopener">
+                        <Icon Name="github" /> @Loc["projects.viewall"]
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="repo-controls">
+                <label class="search">
+                    <Icon Name="search" />
+                    <input type="text" placeholder="@Loc["projects.search"]"
+                           @bind="_search" @bind:event="oninput" />
+                </label>
+
+                <select class="select" @bind="_sort">
+                    <option value="@SortMode.Stars">★ @Loc["projects.sort_stars"]</option>
+                    <option value="@SortMode.Recent">⏱ @Loc["projects.sort_recent"]</option>
+                    <option value="@SortMode.Name">A–Z @Loc["projects.sort_name"]</option>
+                </select>
+            </div>
+
+            <div class="chip-row">
+                <button class="chip @(_owner == "all" ? "active" : "")" @onclick='() => SetOwner("all")'>
+                    @Loc["projects.all"] (@_data.Repos.Count)
+                </button>
+                <button class="chip @(_owner == "74nu5" ? "active" : "")" @onclick='() => SetOwner("74nu5")'>
+                    @@74nu5 (@CountFor("74nu5"))
+                </button>
+                <button class="chip @(_owner == "Tanuscorp" ? "active" : "")" @onclick='() => SetOwner("Tanuscorp")'>
+                    @@Tanuscorp (@CountFor("Tanuscorp"))
+                </button>
+            </div>
+
+            var filtered = Filtered().ToList();
+            @if (filtered.Count == 0)
+            {
+                <div class="state">@Loc["projects.empty"]</div>
+            }
+            else
+            {
+                <div class="grid grid--repos">
+                    @foreach (var repo in filtered)
+                    {
+                        <RepoCard Repo="repo" />
+                    }
+                </div>
+            }
+
+            <div style="text-align:center;margin-top:30px">
+                <a class="btn btn--ghost" href="@SiteContent.GitHubUrl" target="_blank" rel="noopener">
+                    <Icon Name="github" /> @Loc["projects.viewall"]
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+@code {
+    private enum SortMode { Stars, Recent, Name }
+
+    private bool _loading = true;
+    private GitHubData? _data;
+    private string _search = "";
+    private SortMode _sort = SortMode.Stars;
+    private string _owner = "all";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await GitHub.LoadAsync();
+        _loading = false;
+    }
+
+    private void SetOwner(string owner) => _owner = owner;
+
+    private int CountFor(string owner) => _data?.Repos.Count(r => r.OwnerLabel == owner) ?? 0;
+
+    private IEnumerable<GitHubRepo> Filtered()
+    {
+        if (_data is null)
+            return [];
+
+        var q = _data.Repos.AsEnumerable();
+
+        if (_owner != "all")
+            q = q.Where(r => r.OwnerLabel == _owner);
+
+        if (!string.IsNullOrWhiteSpace(_search))
+        {
+            var s = _search.Trim();
+            q = q.Where(r =>
+                r.Name.Contains(s, StringComparison.OrdinalIgnoreCase)
+                || (r.Description?.Contains(s, StringComparison.OrdinalIgnoreCase) ?? false)
+                || (r.Language?.Contains(s, StringComparison.OrdinalIgnoreCase) ?? false)
+                || (r.Topics?.Any(t => t.Contains(s, StringComparison.OrdinalIgnoreCase)) ?? false));
+        }
+
+        return _sort switch
+        {
+            SortMode.Name => q.OrderBy(r => r.Name, StringComparer.OrdinalIgnoreCase),
+            SortMode.Recent => q.OrderByDescending(r => r.PushedAt ?? DateTimeOffset.MinValue),
+            _ => q.OrderByDescending(r => r.StargazersCount).ThenByDescending(r => r.PushedAt ?? DateTimeOffset.MinValue),
+        };
+    }
+}

@@ -1,0 +1,62 @@
+@inherits LocalizedComponentBase
+@implements IDisposable
+
+&gt; @_typed<span class="caret"></span>
+
+@code {
+    private string _typed = "";
+    private CancellationTokenSource? _cts;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _cts = new CancellationTokenSource();
+            _ = TypeLoopAsync(_cts.Token);
+        }
+    }
+
+    /// <summary>Effet « machine à écrire » qui fait défiler les rôles.
+    /// Isolé dans son propre composant pour ne ré-afficher que ce fragment.</summary>
+    private async Task TypeLoopAsync(CancellationToken ct)
+    {
+        try
+        {
+            var index = 0;
+            while (!ct.IsCancellationRequested)
+            {
+                var roles = SiteContent.Roles(Loc.IsFr);
+                var word = roles[index % roles.Length];
+
+                for (var i = 1; i <= word.Length && !ct.IsCancellationRequested; i++)
+                {
+                    _typed = word[..i];
+                    await InvokeAsync(StateHasChanged);
+                    await Task.Delay(55, ct);
+                }
+
+                await Task.Delay(1400, ct);
+
+                for (var i = word.Length; i >= 0 && !ct.IsCancellationRequested; i--)
+                {
+                    _typed = word[..i];
+                    await InvokeAsync(StateHasChanged);
+                    await Task.Delay(28, ct);
+                }
+
+                index++;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // arrêt normal
+        }
+    }
+
+    public override void Dispose()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+        base.Dispose();
+    }
+}

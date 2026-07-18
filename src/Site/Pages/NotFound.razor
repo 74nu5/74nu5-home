@@ -1,0 +1,14 @@
+@page "/not-found"
+@layout MainLayout
+@inherits LocalizedComponentBase
+
+<PageTitle>404 · 74nu5.dev</PageTitle>
+
+<section class="section container" style="text-align:center;padding-block:110px">
+    <div class="mono" style="font-size:clamp(3rem,12vw,6rem);font-weight:700;color:var(--accent)">404</div>
+    <h1 style="margin-top:10px">@Loc["nf.title"]</h1>
+    <p class="section__sub" style="margin:0 auto 26px">@Loc["nf.desc"]</p>
+    <a class="btn btn--primary" href="/" style="display:inline-flex">
+        <Icon Name="arrow-right" /> @Loc["nf.home"]
+    </a>
+</section>

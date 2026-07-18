@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tanus · 74nu5.dev</title>
+    <meta name="description" content="tanus (74nu5) — développeur .NET à Nantes. Applications, outils open source et projets. Portfolio Blazor WebAssembly." />
+    <meta name="author" content="tanus" />
+    <meta name="theme-color" content="#0b0e14" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="tanus · 74nu5.dev" />
+    <meta property="og:description" content="Développeur .NET à Nantes — applications, outils open source et projets." />
+    <meta property="og:url" content="https://74nu5.dev" />
+    <meta property="og:image" content="https://avatars.githubusercontent.com/u/325077?v=4" />
+    <meta name="twitter:card" content="summary" />
+
+    <base href="/" />
+    <link rel="preload" id="webassembly" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="Site.styles.css" rel="stylesheet" />
+    <script type="importmap"></script>
+    <!-- Applique le thème enregistré avant le rendu pour éviter tout flash -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+                var l = localStorage.getItem('lang');
+                if (l === 'fr' || l === 'en') {
+                    document.documentElement.setAttribute('lang', l);
+                }
+            } catch (e) { }
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="app-loading">
+            <div class="app-loading__prompt"><span class="app-loading__caret">tanus@74nu5</span>:~$ <span class="app-loading__cmd">./boot.sh</span></div>
+            <svg class="loading-progress" viewBox="0 0 100 100">
+                <circle r="40%" cx="50%" cy="50%" />
+                <circle r="40%" cx="50%" cy="50%" />
+            </svg>
+            <div class="loading-progress-text"></div>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        Une erreur inattendue s'est produite. / An unexpected error occurred.
+        <a href="." class="reload">Recharger</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="js/site.js"></script>
+    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
+</body>
+
+</html>

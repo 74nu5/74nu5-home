@@ -1,0 +1,142 @@
+@page "/"
+@inherits LocalizedComponentBase
+@inject GitHubService GitHub
+
+<PageTitle>tanus · 74nu5.dev</PageTitle>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+    <div class="container hero__grid">
+        <div>
+            <div class="hero__eyebrow">@Loc["hero.eyebrow"]</div>
+            <h1>@Loc["hero.hello"] <span class="accent">@SiteContent.Name</span>.</h1>
+            <div class="hero__role mono">
+                <TypedText />
+            </div>
+            <p class="hero__desc">@Loc["hero.desc"]</p>
+
+            <div class="hero__meta">
+                <span>📍 @SiteContent.Location</span>
+                <span>🏢 @SiteContent.Company</span>
+                <span>🖥️ .NET · Blazor</span>
+            </div>
+
+            <div class="hero__cta">
+                <a class="btn btn--primary" href="#projects">
+                    <Icon Name="code" /> @Loc["hero.cta_projects"]
+                </a>
+                <a class="btn btn--ghost" href="@SiteContent.GitHubUrl" target="_blank" rel="noopener">
+                    <Icon Name="github" /> @Loc["hero.cta_github"]
+                </a>
+            </div>
+        </div>
+
+        <div class="hero__avatar">
+            <img src="@SiteContent.AvatarUrl" alt="@SiteContent.Name" loading="eager" width="210" height="210" />
+        </div>
+    </div>
+</section>
+
+<!-- ============================ STATS ============================ -->
+<section class="container" style="margin-bottom:20px">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat__num">@(_data?.User?.PublicRepos ?? 60)+</div>
+            <div class="stat__label">@Loc["stats.repos"]</div>
+        </div>
+        <div class="stat">
+            <div class="stat__num">@TotalStars</div>
+            <div class="stat__label">@Loc["stats.stars"]</div>
+        </div>
+        <div class="stat">
+            <div class="stat__num">@SiteContent.Apps.Length</div>
+            <div class="stat__label">@Loc["stats.apps"]</div>
+        </div>
+        <div class="stat">
+            <div class="stat__num">@(_data?.User?.Followers ?? 0)</div>
+            <div class="stat__label">@Loc["stats.followers"]</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ APPS ============================ -->
+<section class="section" id="apps">
+    <div class="container">
+        <div class="section__head">
+            <span class="section__index">@Loc["apps.index"] //</span>
+            <h2 class="section__title">@Loc["apps.title"]</h2>
+        </div>
+        <p class="section__sub" style="margin-bottom:26px">@Loc["apps.sub"]</p>
+
+        <div class="grid grid--apps">
+            @foreach (var app in SiteContent.Apps)
+            {
+                <AppCard App="app" />
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ============================ PROJECTS ============================ -->
+<ProjectsSection />
+
+<!-- ============================ STACK ============================ -->
+<section class="section" id="stack">
+    <div class="container">
+        <div class="section__head">
+            <span class="section__index">@Loc["stack.index"] //</span>
+            <h2 class="section__title">@Loc["stack.title"]</h2>
+        </div>
+        <p class="section__sub" style="margin-bottom:26px">@Loc["stack.sub"]</p>
+
+        <div class="stack-groups">
+            @foreach (var group in SiteContent.Stack)
+            {
+                <div class="stack-group">
+                    <h3>@Loc.Pick(group.TitleFr, group.TitleEn)</h3>
+                    <div class="tags">
+                        @foreach (var item in group.Items)
+                        {
+                            <span class="tag">@item</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="section" id="contact">
+    <div class="container">
+        <div class="section__head">
+            <span class="section__index">@Loc["contact.index"] //</span>
+            <h2 class="section__title">@Loc["contact.title"]</h2>
+        </div>
+        <p class="section__sub" style="margin-bottom:26px">@Loc["contact.sub"]</p>
+
+        <div class="link-grid">
+            @foreach (var link in SiteContent.Contacts)
+            {
+                <a class="link-card" href="@link.Url" target="@(link.External ? "_blank" : null)" rel="noopener">
+                    <span class="link-card__icon"><Icon Name="@link.Icon" /></span>
+                    <span>
+                        <span class="link-card__label">@link.Label</span><br />
+                        <span class="link-card__sub">@link.Sub</span>
+                    </span>
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private GitHubData? _data;
+
+    private int TotalStars => _data?.Repos.Sum(r => r.StargazersCount) ?? 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await GitHub.LoadAsync();
+    }
+}

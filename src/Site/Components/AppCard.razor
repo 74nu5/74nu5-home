@@ -1,0 +1,30 @@
+@inherits LocalizedComponentBase
+
+<article class="card">
+    <div class="card__top">
+        <div class="card__icon"><Icon Name="@App.Icon" /></div>
+        <span class="badge-live">live</span>
+    </div>
+
+    <h3 class="card__title">@App.Name</h3>
+    <p class="card__desc">@Loc.Pick(App.DescFr, App.DescEn)</p>
+
+    <div class="card__footer">
+        <span class="pill">@App.Tech</span>
+        <div class="card__links">
+            @if (App.RepoUrl is not null)
+            {
+                <a href="@App.RepoUrl" target="_blank" rel="noopener" title="@Loc["apps.source"]">
+                    <Icon Name="github" />
+                </a>
+            }
+            <a href="@App.Url" target="_blank" rel="noopener" title="@Loc["apps.open"]">
+                <Icon Name="external" />
+            </a>
+        </div>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public LiveApp App { get; set; } = default!;
+}
