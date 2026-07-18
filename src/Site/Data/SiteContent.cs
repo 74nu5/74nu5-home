@@ -35,8 +35,8 @@ public static class SiteContent
 
     /// <summary>Rôles défilants dans le hero, par langue.</summary>
     public static string[] Roles(bool fr) => fr
-        ? ["développeur .NET", "Blazor & Web", "outils pour devs", "applications desktop", "open source"]
-        : [".NET developer", "Blazor & Web", "developer tooling", "desktop apps", "open source"];
+        ? ["expert .NET / C#", "15 ans de .NET", "architecte logiciel", "Blazor & Web", "outils pour devs", "open source"]
+        : [".NET / C# expert", "15+ years of .NET", "software architect", "Blazor & Web", "developer tooling", "open source"];
 
     public static readonly LiveApp[] Apps =
     [

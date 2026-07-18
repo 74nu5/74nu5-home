@@ -58,17 +58,17 @@ public sealed class LocalizationService(IJSRuntime js)
         ["nav.contact"] = ("contact", "contact"),
 
         // Hero
-        ["hero.eyebrow"] = ("// développeur .NET · Nantes", "// .NET developer · Nantes"),
+        ["hero.eyebrow"] = ("// expert .NET / C# · Nantes", "// .NET / C# expert · Nantes"),
         ["hero.hello"] = ("Salut, moi c'est", "Hi, I'm"),
         ["hero.desc"] = (
-            "Je conçois des applications web et desktop en .NET, des outils pour développeurs et quelques expérimentations. Voici un aperçu de ce que je construis — en ligne et open source.",
-            "I build web & desktop apps in .NET, developer tooling and a few experiments. Here's a look at what I make — live and open source."),
+            "Développeur .NET / C# depuis plus de 15 ans. Je conçois des applications web et desktop, des outils pour développeurs et des architectures robustes — en ligne et open source.",
+            "Building with .NET / C# for 15+ years. I design web & desktop apps, developer tooling and solid architectures — live and open source."),
         ["hero.cta_projects"] = ("Explorer les projets", "Explore projects"),
         ["hero.cta_github"] = ("GitHub", "GitHub"),
 
         // Stats
         ["stats.repos"] = ("dépôts publics", "public repos"),
-        ["stats.followers"] = ("abonnés", "followers"),
+        ["stats.experience"] = ("ans avec .NET / C#", "years with .NET / C#"),
         ["stats.apps"] = ("apps en ligne", "live apps"),
         ["stats.stars"] = ("étoiles cumulées", "total stars"),
 
