@@ -31,7 +31,7 @@ public static class SiteContent
     public const string GitHubUrl = "https://github.com/74nu5";
     public const string GitHubOrgUrl = "https://github.com/Tanuscorp";
     public const string Email = "info@tanus.eu";
-    public const string SiteRepoUrl = "https://github.com/74nu5/74nu5";
+    public const string SiteRepoUrl = "https://github.com/74nu5/74nu5-home";
 
     /// <summary>Rôles défilants dans le hero, par langue.</summary>
     public static string[] Roles(bool fr) => fr
