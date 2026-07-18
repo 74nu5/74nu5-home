@@ -40,6 +40,12 @@ public static class SiteContent
 
     public static readonly LiveApp[] Apps =
     [
+        new("Settex", "settex.74nu5.dev", "https://settex.74nu5.dev",
+            "https://github.com/74nu5/Settex",
+            "Langage de configuration déclaratif pour .NET qui compile des fichiers .settex en appsettings*.json : overlays d'environnement, variables, expressions, includes et fusion profonde. CLI, intégration MSBuild, serveur de langage et extensions VS / VS Code. Lien vers la documentation en ligne.",
+            "Declarative configuration language for .NET that compiles .settex files to appsettings*.json: environment overlays, variables, expressions, includes and deep merging. CLI, MSBuild integration, language server and VS / VS Code extensions. Link to the online documentation.",
+            ".NET 10 · Compiler · LSP", "settex"),
+
         new("Bouchon Universel", "bouchon-universel.74nu5.dev", "https://bouchon-universel.74nu5.dev",
             "https://github.com/74nu5/bouchon-universel",
             "Serveur de bouchons HTTP (mocks) : enregistre puis rejoue les réponses de services réels. Ingénierie du chaos, templating, import/export, administration web et API. Lien vers la documentation en ligne.",
