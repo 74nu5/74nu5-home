@@ -21,3 +21,7 @@ Thumbs.db
 # Local env
 *.env
 appsettings.*.local.json
+
+# ReSharper / Rider caches
+_ReSharper.Caches/
+.idea/
