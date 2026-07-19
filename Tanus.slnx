@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Site/Site.csproj" />
   </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/Site.Prerender/Site.Prerender.csproj" />
+  </Folder>
 </Solution>

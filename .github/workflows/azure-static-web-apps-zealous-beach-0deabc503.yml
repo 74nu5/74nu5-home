@@ -8,10 +8,17 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+  # Le HTML prérendu fige les données GitHub au moment du build : ce rebuild
+  # quotidien le rafraîchit sans avoir à pousser un commit.
+  schedule:
+    - cron: "17 4 * * *"
+  # Permet aussi de relancer un build à la demande depuis l'onglet Actions.
+  workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    # Tout sauf la fermeture d'une PR (push, schedule, workflow_dispatch, PR ouverte/màj).
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:
@@ -34,6 +41,13 @@ jobs:
 
       - name: Publish Blazor WebAssembly
         run: dotnet publish src/Site/Site.csproj -c Release -o publish
+
+      # Injecte le HTML de la page d'accueil dans index.html pour que les
+      # crawlers voient le contenu réel (le WebAssembly reprend la main ensuite).
+      - name: Prerender home page
+        run: dotnet run --project tools/Site.Prerender/Site.Prerender.csproj -c Release -- publish/wwwroot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
