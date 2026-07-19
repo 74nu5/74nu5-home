@@ -35,6 +35,13 @@ jobs:
       - name: Publish Blazor WebAssembly
         run: dotnet publish src/Site/Site.csproj -c Release -o publish
 
+      # Injecte le HTML de la page d'accueil dans index.html pour que les
+      # crawlers voient le contenu réel (le WebAssembly reprend la main ensuite).
+      - name: Prerender home page
+        run: dotnet run --project tools/Site.Prerender/Site.Prerender.csproj -c Release -- publish/wwwroot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
 
