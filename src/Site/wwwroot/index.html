@@ -8,6 +8,7 @@
     <meta name="description" content="tanus (74nu5) — expert .NET / C# à Nantes, 15+ ans d'expérience. Applications web & desktop, outils pour développeurs et open source. Portfolio Blazor WebAssembly." />
     <meta name="author" content="tanus" />
     <meta name="theme-color" content="#0b0e14" />
+    <link rel="canonical" href="https://74nu5.dev/" />
 
     <!-- Open Graph / social -->
     <meta property="og:type" content="website" />
@@ -20,6 +21,50 @@
     <meta property="og:image:alt" content="74nu5.dev — tanus, développeur .NET à Nantes" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://74nu5.dev/og-image.png" />
+
+    <!-- Données structurées (schema.org) pour les résultats enrichis -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://74nu5.dev/#person",
+          "name": "tanus",
+          "alternateName": "74nu5",
+          "url": "https://74nu5.dev/",
+          "image": "https://avatars.githubusercontent.com/u/325077?v=4",
+          "jobTitle": "Expert .NET / C#",
+          "email": "mailto:info@tanus.eu",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nantes",
+            "addressCountry": "FR"
+          },
+          "worksFor": {
+            "@type": "Organization",
+            "name": "3BStudio",
+            "url": "https://3bstudio.fr"
+          },
+          "knowsAbout": [".NET", "C#", "Blazor", "ASP.NET Core", "WebAssembly", "Azure", "WinUI"],
+          "sameAs": [
+            "https://github.com/74nu5",
+            "https://github.com/Tanuscorp"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://74nu5.dev/#website",
+          "url": "https://74nu5.dev/",
+          "name": "74nu5.dev",
+          "description": "Portfolio de tanus — expert .NET / C# à Nantes : applications web & desktop, outils pour développeurs et open source.",
+          "inLanguage": ["fr", "en"],
+          "author": { "@id": "https://74nu5.dev/#person" },
+          "publisher": { "@id": "https://74nu5.dev/#person" }
+        }
+      ]
+    }
+    </script>
 
     <base href="/" />
     <link rel="preload" id="webassembly" />

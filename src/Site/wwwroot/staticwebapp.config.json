@@ -6,11 +6,13 @@
       "/_framework/*",
       "/css/*",
       "/js/*",
-      "/*.{png,jpg,gif,svg,ico,css,js,json,wasm,dat,blat,dll,pdb,woff,woff2}"
+      "/*.{png,jpg,jpeg,gif,svg,ico,css,js,json,txt,xml,wasm,dat,blat,dll,pdb,woff,woff2,webmanifest}"
     ]
   },
   "mimeTypes": {
     ".json": "application/json",
+    ".xml": "application/xml",
+    ".txt": "text/plain",
     ".wasm": "application/wasm",
     ".dll": "application/octet-stream",
     ".blat": "application/octet-stream",
